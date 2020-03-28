@@ -1,9 +1,13 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("org.springframework.boot") version "2.2.5.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("org.sonarqube") version "2.8"
     id("jacoco")
     id("com.google.cloud.tools.jib") version "2.1.0"
+    kotlin("jvm") version "1.3.71"
+    kotlin("plugin.spring") version "1.3.71"
 }
 
 java {
@@ -35,7 +39,9 @@ dependencies {
     }
 
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
-
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.projectreactor.addons:reactor-adapter:3.3.2.RELEASE")
     implementation("org.yaml:snakeyaml:1.26")
     implementation("io.r2dbc:r2dbc-spi:0.8.1.RELEASE")
@@ -68,13 +74,14 @@ tasks.test {
 
 sonarqube {
     properties {
-        property("sonar.projectName", "microservices-starter-java")
+        property("sonar.projectName", "microservices-starter-kotlin")
         property("sonar.host.url", "http://localhost:9000")
-        property("sonar.projectKey", "microservices-starter-java-app")
+        property("sonar.projectKey", "microservices-starter-kotlin-app")
         property("sonar.projectVersion", "${project.version}")
         property("sonar.junit.reportPaths", "${projectDir}/build/test-results/test")
         property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir}/build/reports/jacoco/test/jacocoTestReport.xml")
-        property("sonar.coverage.exclusions", "**/R.java")
+        property("sonar.coverage.exclusions", "**/R.kt")
+        property("sonar.language", "kotlin")
     }
 }
 
@@ -130,7 +137,7 @@ tasks.check {
 }
 
 task("runApp", JavaExec::class) {
-    main = "com.github.starter.Application"
+    main = "com.github.starter.ApplicationKt"
     classpath = sourceSets["main"].runtimeClasspath
     jvmArgs = listOf(
             "-Xms512m", "-Xmx512m"
@@ -150,4 +157,12 @@ jib {
         )
     }
 
+}
+
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+    }
 }
