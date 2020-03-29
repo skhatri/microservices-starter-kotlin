@@ -18,6 +18,7 @@ class JdbcClientPreparator(private val configItemMap: Map<String, ConfigItem>) {
 
                 configItem.database?.let { db -> options.option(ConnectionFactoryOptions.DATABASE, db) }
                 configItem.host?.let{host -> options.option(ConnectionFactoryOptions.HOST, host)}
+                configItem.port?.let{port -> options.option(ConnectionFactoryOptions.PORT, port)}
                 options.option(ConnectionFactoryOptions.PASSWORD, configItem.password)
                 options.option(ConnectionFactoryOptions.USER, configItem.username)
                 configItem.protocol?.let { proto -> options.option(ConnectionFactoryOptions.PROTOCOL, proto)}
