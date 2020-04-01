@@ -34,14 +34,17 @@ endpoints:
 server.error.whitelabel.enabled: false
 
 
-secrets.providers:
-  - name: vault
-    mount: "${SECRETS_FILE:/vault/secrets}"
-    key: "${KEY_FILE:/tmp/key}"
-    #if default is not set at entry level, fail, empty, identity
-    on-error: empty
-    #additional entries in one file
-    entries: "others.properties"
+secrets:
+  config:
+    providers:
+    - name: vault
+      mount: "${SECRETS_FILE:/vault/secrets}"
+      key: "${KEY_FILE:/tmp/key}"
+      #if default is not set at entry level, fail, empty, identity
+      error-decision: empty
+      #additional entries in one file
+      entries-location: "others.properties"
+      ignore-resource-failure: true
 
 datasource.jdbc:
   enabled: ${flags.use.jdbc}

@@ -5,7 +5,7 @@ datasource.jdbc:
     - name: default-jdbc-client
       driver: h2
       username: sa
-      password:
+      password: "secret::vault::sa:-"
       protocol: mem
       database: "testdb"
       enabled: true
@@ -14,7 +14,7 @@ datasource.jdbc:
     - name: postgresql-1
       driver: postgresql
       username: todoservice
-      password: password
+      password: "secret::vault::todoservice:-password"
       host: localhost
       port: 5432
       enabled: false
