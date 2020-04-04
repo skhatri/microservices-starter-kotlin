@@ -1,6 +1,6 @@
 package com.github.starter.app.config;
 
-import com.github.starter.app.secrets.SecretsClient
+import com.github.starter.core.secrets.SecretsClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean

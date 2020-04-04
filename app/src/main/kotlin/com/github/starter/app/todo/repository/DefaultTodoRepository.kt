@@ -4,6 +4,7 @@ import com.github.starter.app.config.JdbcClientFactory;
 import com.github.starter.app.todo.model.TodoTask;
 import com.github.starter.core.exception.InternalServerError;
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDateTime;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.data.r2dbc.query.Criteria;
@@ -13,9 +14,9 @@ import java.util.*
 import java.util.function.Predicate
 
 @Repository
-open class DefaultTodoRepository @Autowired constructor(clientFactory: JdbcClientFactory) : TodoRepository {
+open class DefaultTodoRepository @Autowired constructor(clientFactory: JdbcClientFactory, @Value("\${flags.default-jdbc-client}") jdbcClientName: String) : TodoRepository {
 
-    private val databaseClient: DatabaseClient = clientFactory.forName("default-jdbc-client").client();
+    private val databaseClient: DatabaseClient = clientFactory.forName(jdbcClientName).client()
 
     override fun listItems(): Mono<List<TodoTask>> {
         return databaseClient

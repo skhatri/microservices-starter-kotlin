@@ -1,4 +1,4 @@
-package com.github.starter.app.secrets
+package com.github.starter.core.secrets
 
 import com.github.skhatri.mounted.model.SecretConfiguration
 import org.springframework.boot.context.properties.ConfigurationProperties

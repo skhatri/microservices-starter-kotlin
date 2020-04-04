@@ -1,10 +1,9 @@
 package com.github.starter.app.config;
 
-import com.github.starter.app.secrets.SecretsClient
+import com.github.starter.core.secrets.SecretsClient
 import com.github.starter.core.exception.ConfigurationException
 import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactoryOptions
-import java.util.function.BiConsumer;
 
 class JdbcClientPreparator(private val configItemMap: Map<String, ConfigItem>, private val secretsClient: SecretsClient) {
 
@@ -22,7 +21,8 @@ class JdbcClientPreparator(private val configItemMap: Map<String, ConfigItem>, p
                 configItem.port?.let{port -> options.option(ConnectionFactoryOptions.PORT, port)}
                 val resolvedPass = secretsClient.resolve(configItem.password).joinToString("")
                 options.option(ConnectionFactoryOptions.PASSWORD, resolvedPass)
-                options.option(ConnectionFactoryOptions.USER, configItem.username)
+                val resolvedUser = secretsClient.resolve(configItem.username).joinToString("")
+                options.option(ConnectionFactoryOptions.USER, resolvedUser)
                 configItem.protocol?.let { proto -> options.option(ConnectionFactoryOptions.PROTOCOL, proto)}
 
                 val connFactory = ConnectionFactories.get(options.build())

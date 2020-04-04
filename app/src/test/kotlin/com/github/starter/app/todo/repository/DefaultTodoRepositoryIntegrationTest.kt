@@ -7,7 +7,7 @@ import com.github.skhatri.mounted.model.SecretProvider
 import com.github.starter.app.config.ConfigItem
 import com.github.starter.app.config.JdbcClientConfig
 import com.github.starter.app.config.JdbcProperties
-import com.github.starter.app.secrets.SecretsClient
+import com.github.starter.core.secrets.SecretsClient
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -35,10 +35,11 @@ class DefaultTodoRepositoryIntegrationTest {
         cfg.enabled = true
         cfg.host = postgres.containerIpAddress
         cfg.port = postgres.firstMappedPort
-        cfg.username = "postgres"
-        cfg.password = "secret::vault::postgres:-admin"
-        cfg.name = "default-jdbc-client"
-        cfg.database = "postgres"
+        cfg.username = "secret::vault::postgres:-todo_admin"
+        cfg.password = "secret::vault::postgres:-password"
+        val defaultJdbcName = "default-jdbc-client"
+        cfg.name = defaultJdbcName
+        cfg.database = "todo"
         val jdbcProperties = JdbcProperties(listOf(cfg))
 
         val jdbcClientConfig = JdbcClientConfig()
@@ -52,12 +53,13 @@ class DefaultTodoRepositoryIntegrationTest {
         secretProvider.mount = "/doesntexist"
 
         val secretConfiguration = SecretConfiguration()
+        secretConfiguration.setKeyErrorDecision(ErrorDecision.IDENTITY.toString().toLowerCase())
         secretConfiguration.providers = listOf(secretProvider)
         val mountedSecretsResolver = MountedSecretsFactory(secretConfiguration).create()
         val secretsClient = SecretsClient(mountedSecretsResolver)
         val factory = jdbcClientConfig.dataSources(config, secretsClient)
 
-        this.todoRepositoryUseCases = TodoRepositoryUseCases(DefaultTodoRepository(factory))
+        this.todoRepositoryUseCases = TodoRepositoryUseCases(DefaultTodoRepository(factory, defaultJdbcName))
     }
 
     @DisplayName("list todo")

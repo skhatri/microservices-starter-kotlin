@@ -1,7 +1,7 @@
 package com.github.starter.app.config;
 
 import com.github.skhatri.mounted.MountedSecretsResolver
-import com.github.starter.app.secrets.SecretsClient
+import com.github.starter.core.secrets.SecretsClient
 import com.github.starter.core.exception.ConfigurationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
