@@ -74,19 +74,23 @@ class JdbcScriptProcessor {
                 resources.toList()
             }
             return resourceList.filter { p -> scriptPattern.matcher(p.filename).matches() }
-                .sortedWith(Comparator { o1, o2 ->
-                    val matchResult1 = scriptPattern.matcher(o1.filename);
-                    val matchResult2 = scriptPattern.matcher(o2.filename);
-                    if (matchResult1.find() && matchResult2.find()) {
-                        val fileNum1 = Integer.parseInt(matchResult1.group(1));
-                        val fileNum2 = Integer.parseInt(matchResult2.group(1));
-                        fileNum1.compareTo(fileNum2);
-                    } else {
-                        0
-                    }
-                }).toList();
+                .sortedWith(getResourceComparator(scriptPattern)).toList();
         } catch (exp: Exception) {
             throw  ConfigurationException("could not load initialise scripts", exp);
+        }
+    }
+
+    private fun getResourceComparator(scriptPattern: Pattern): java.util.Comparator<Resource> {
+        return Comparator { o1, o2 ->
+            val matchResult1 = scriptPattern.matcher(o1.filename);
+            val matchResult2 = scriptPattern.matcher(o2.filename);
+            if (matchResult1.find() && matchResult2.find()) {
+                val fileNum1 = Integer.parseInt(matchResult1.group(1));
+                val fileNum2 = Integer.parseInt(matchResult2.group(1));
+                fileNum1.compareTo(fileNum2);
+            } else {
+                0
+            }
         }
     }
 
