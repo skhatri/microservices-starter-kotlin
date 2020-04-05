@@ -65,14 +65,13 @@ class JdbcScriptProcessor {
         val prefix = "file:";
         val scriptPattern = Pattern.compile("^V([0-9]+)_(.+)sql$");
         try {
-            var resourceList: List<Resource>
-            if (path.startsWith(prefix)) {
+            var resourceList: List<Resource> = if (path.startsWith(prefix)) {
                 val file = File(path.substring(prefix.length));
-                resourceList = walkPath(file).stream().map { path1 -> FileSystemResource(path1.toFile()) }.toList();
+                walkPath(file).stream().map { path1 -> FileSystemResource(path1.toFile()) }.toList();
             } else {
-                val pathResourceResolver = PathMatchingResourcePatternResolver();
-                val resources = pathResourceResolver.getResources("$path/*.sql");
-                resourceList = resources.toList();
+                val pathResourceResolver = PathMatchingResourcePatternResolver()
+                val resources = pathResourceResolver.getResources("$path/*.sql")
+                resources.toList()
             }
             return resourceList.filter { p -> scriptPattern.matcher(p.filename).matches() }
                 .sortedWith(Comparator { o1, o2 ->
@@ -85,8 +84,7 @@ class JdbcScriptProcessor {
                     } else {
                         0
                     }
-                })
-                .toList();
+                }).toList();
         } catch (exp: Exception) {
             throw  ConfigurationException("could not load initialise scripts", exp);
         }
