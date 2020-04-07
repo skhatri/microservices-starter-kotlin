@@ -1,4 +1,4 @@
-package com.github.starter.core.advice;
+package com.github.starter.core.advice
 
 import com.github.starter.core.exception.BadRequest
 import com.github.starter.core.exception.InternalServerError
@@ -32,26 +32,26 @@ class GlobalErrorHandlerTest {
     @ParameterizedTest(name = "Test Routing Function [{index}] {argumentsWithNames}")
     @MethodSource("data")
     fun testRoutingFunction(err: Throwable, expectedStatusCode: Int) {
-        val applicationContext = Mockito.mock(ApplicationContext::class.java);
-        Mockito.`when`(applicationContext.classLoader).thenReturn(javaClass.classLoader);
-        val codecConfigurer = DefaultServerCodecConfigurer();
-        val attributes = CustomErrorAttributes();
-        val errorHandler = GlobalErrorHandler(attributes, applicationContext, codecConfigurer);
-        errorHandler.afterPropertiesSet();
+        val applicationContext = Mockito.mock(ApplicationContext::class.java)
+        Mockito.`when`(applicationContext.classLoader).thenReturn(javaClass.classLoader)
+        val codecConfigurer = DefaultServerCodecConfigurer()
+        val attributes = CustomErrorAttributes()
+        val errorHandler = GlobalErrorHandler(attributes, applicationContext, codecConfigurer)
+        errorHandler.afterPropertiesSet()
 
-        val request = createErrorServerRequest(err);
+        val request = createErrorServerRequest(err)
 
-        val serverResponse: Mono<ServerResponse> = errorHandler.getRoutingFunction(attributes).route(request).flatMap({ fn -> fn.handle(request) });
-        val latch = CountDownLatch(1);
+        val serverResponse: Mono<ServerResponse> = errorHandler.getRoutingFunction(attributes).route(request).flatMap({ fn -> fn.handle(request) })
+        val latch = CountDownLatch(1)
         serverResponse.subscribe(Consumer { res ->
-            Assertions.assertEquals(expectedStatusCode, res.rawStatusCode());
-            latch.countDown();
+            Assertions.assertEquals(expectedStatusCode, res.rawStatusCode())
+            latch.countDown()
         })
-        latch.await();
+        latch.await()
 
         StepVerifier.create(serverResponse)
             .thenConsumeWhile(Predicate { sr -> sr.statusCode().isError })
-            .verifyComplete();
+            .verifyComplete()
     }
 
     private fun createErrorServerRequest(throwable: Throwable): ServerRequest {
@@ -65,7 +65,7 @@ class GlobalErrorHandlerTest {
         return MockServerRequest.builder()
             .exchange(serverWebExchange)
             .attribute(DefaultErrorAttributes::class.java.name + ".ERROR", throwable)
-            .build();
+            .build()
     }
 
 
@@ -74,6 +74,6 @@ class GlobalErrorHandlerTest {
             Arguments.of(BadRequest(), 400),
             Arguments.of(InternalServerError(), 500),
             Arguments.of(RuntimeException(), 500)
-        );
+        )
     }
 }

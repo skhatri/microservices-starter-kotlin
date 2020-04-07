@@ -6,6 +6,17 @@ Microservices Starter Project
 [![Known Vulnerabilities](https://snyk.io/test/github/skhatri/microservices-starter-kotlin/badge.svg?targetFile=build.gradle.kts)](https://snyk.io/test/github/skhatri/microservices-starter-kotlin?targetFile=build.gradle.kts)
 
 
+### LDAP Features
+1. Connect to LDAP
+1. Check members of a group
+1. Get attribute of a user
+1. Create JWT token by signing payload
+
+### Running locally
+1. Using docker, `docker-compose up`
+1. Run Application.kt
+1. `https://localhost/ldap/search/example`
+
 ### logging
 log4j2
 

@@ -1,4 +1,4 @@
-package com.github.starter.app.config;
+package com.github.starter.app.config
 
 class ConfigItem {
     lateinit var name: String

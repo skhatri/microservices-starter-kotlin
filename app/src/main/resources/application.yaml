@@ -5,6 +5,7 @@ flags:
     ssl: true
     http2: true
     jdbc: true
+    ldap: true
 
 server.ssl:
   key-store: classpath:server.p12
@@ -73,3 +74,13 @@ datasource.jdbc:
       host: localhost
       port: 5432
       enabled: false
+
+ldap:
+  host: "192.168.99.100"
+  port: 389 #389 without ssl, 636 with ssl
+  baseDn: "dc=example,dc=org"
+  username: "cn=admin,dc=example,dc=org"
+  password: "admin"
+  ssl: false
+  timeout: 0
+  enabled: ${flags.use.ldap}

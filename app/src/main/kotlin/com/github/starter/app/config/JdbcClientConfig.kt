@@ -1,4 +1,4 @@
-package com.github.starter.app.config;
+package com.github.starter.app.config
 
 import com.github.starter.app.secrets.SecretsClient
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,13 +15,13 @@ open class JdbcClientConfig {
     @Autowired
     @Bean
     open fun databaseProperties(jdbcProperties: JdbcProperties): Map<String, ConfigItem> {
-        return jdbcProperties.ref.map { kv -> kv.name to kv }.toMap();
+        return jdbcProperties.ref.map { kv -> kv.name to kv }.toMap()
     }
 
     @Autowired
     @Bean
     open fun dataSources(jdbcConfigItems: Map<String, ConfigItem>, secretsClient: SecretsClient): JdbcClientFactory {
-        return JdbcClientFactory(JdbcClientPreparator(jdbcConfigItems, secretsClient).configure(initScripts()));
+        return JdbcClientFactory(JdbcClientPreparator(jdbcConfigItems, secretsClient).configure(initScripts()))
     }
 
     private fun initScripts(): (ConfigItem, JdbcClient) -> Unit {

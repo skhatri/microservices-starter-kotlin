@@ -1,8 +1,8 @@
-package com.github.starter.core.exception;
+package com.github.starter.core.exception
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
 @DisplayName("Exception Tests")
 class ExceptionTests {

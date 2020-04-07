@@ -1,7 +1,7 @@
-package com.github.starter.app.config;
+package com.github.starter.app.config
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.stereotype.Component
 
 @ConfigurationProperties(prefix = "datasource.jdbc")
 @Component

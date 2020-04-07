@@ -1,4 +1,4 @@
-package com.github.starter.app.todo.repository;
+package com.github.starter.app.ldap.repository
 
 import com.github.starter.Application
 import org.junit.jupiter.api.Test

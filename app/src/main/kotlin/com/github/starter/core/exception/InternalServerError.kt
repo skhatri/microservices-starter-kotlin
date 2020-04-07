@@ -1,4 +1,4 @@
-package com.github.starter.core.exception;
+package com.github.starter.core.exception
 
 class InternalServerError(code: String, message: String) : ApiException(code, message, StatusCodes.INTERNAL_SERVER_ERROR, null) {
     constructor() : this("internal-error", "Internal Server Error")

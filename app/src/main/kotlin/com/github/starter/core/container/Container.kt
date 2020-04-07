@@ -1,8 +1,8 @@
-package com.github.starter.core.container;
+package com.github.starter.core.container
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 
 
 class Container<T> @JsonCreator constructor(@JsonProperty("data")
@@ -15,5 +15,5 @@ class Container<T> @JsonCreator constructor(@JsonProperty("data")
 
 
     @JsonCreator
-    constructor(errors: List<MessageItem>) : this(null, mapOf(), errors, listOf());
+    constructor(errors: List<MessageItem>) : this(null, mapOf(), errors, listOf())
 }

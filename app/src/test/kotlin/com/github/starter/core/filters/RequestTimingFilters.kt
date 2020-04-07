@@ -1,4 +1,4 @@
-package com.github.starter.core.filters;
+package com.github.starter.core.filters
 
 class RequestTimingFilters {
     private constructor() {
@@ -6,7 +6,7 @@ class RequestTimingFilters {
 
     companion object {
         fun newInstance(log: Boolean): RequestTimingFilter {
-            return RequestTimingFilter(log);
+            return RequestTimingFilter(log)
         }
     }
 

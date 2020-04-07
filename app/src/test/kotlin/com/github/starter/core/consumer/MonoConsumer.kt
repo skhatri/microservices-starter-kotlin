@@ -1,4 +1,4 @@
-package com.github.starter.core.consumer;
+package com.github.starter.core.consumer
 
 import reactor.core.publisher.Mono
 import java.util.concurrent.CountDownLatch
@@ -11,12 +11,12 @@ class MonoConsumer<T>(private val mono: Mono<T>, private val error: Boolean) {
         mono.subscribe({ res ->
                 consumer?.accept(res)
                 if (!error) {
-                    latch.countDown();
+                    latch.countDown()
                 }
             },
             {
                 if (error) {
-                    latch.countDown();
+                    latch.countDown()
                 }
             })
 

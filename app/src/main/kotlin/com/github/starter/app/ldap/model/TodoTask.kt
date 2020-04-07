@@ -1,9 +1,9 @@
-package com.github.starter.app.todo.model;
+package com.github.starter.app.ldap.model
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
+import java.time.LocalDateTime
 
 class TodoTask @JsonCreator constructor(
     @JsonProperty("id") val id: String, @JsonProperty("description") val description: String, @JsonProperty("action_by") val actionBy: String?,
@@ -12,6 +12,6 @@ class TodoTask @JsonCreator constructor(
 
     override fun toString(): String {
         return StringBuilder("id:").append(id).append(", description: ").append(description).append(", action_by: ").append(actionBy)
-            .append(", created: ").append(created).append(", status: ").append(status).append(", updated: ").append(updated).toString();
+            .append(", created: ").append(created).append(", status: ").append(status).append(", updated: ").append(updated).toString()
     }
 }

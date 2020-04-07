@@ -1,11 +1,11 @@
-package com.github.starter.app.config;
+package com.github.starter.app.config
 
 import com.github.skhatri.mounted.MountedSecretsResolver
 import com.github.starter.app.secrets.SecretsClient
-import com.github.starter.core.exception.ConfigurationException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.github.starter.core.exception.ConfigurationException
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.function.Executable
 import org.mockito.Mockito
 

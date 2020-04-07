@@ -1,26 +1,26 @@
-package com.github.starter.app.todo.endpoints;
+package com.github.starter.app.ldap.endpoints
 
-import com.github.starter.app.todo.model.TodoTask;
-import com.github.starter.app.todo.service.TodoService;
-import com.github.starter.core.advice.CustomErrorAttributes;
-import com.github.starter.core.advice.GlobalErrorHandler;
-import com.github.starter.core.consumer.MonoConsumer;
-import com.github.starter.core.exception.InternalServerError;
-import java.util.stream.Stream;
-import org.junit.jupiter.api.DisplayName;
+import com.github.starter.app.ldap.model.TodoTask
+import com.github.starter.app.ldap.service.TodoService
+import com.github.starter.core.advice.CustomErrorAttributes
+import com.github.starter.core.advice.GlobalErrorHandler
+import com.github.starter.core.consumer.MonoConsumer
+import com.github.starter.core.exception.InternalServerError
+import java.util.stream.Stream
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
-import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.codec.support.DefaultServerCodecConfigurer;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
+import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import org.mockito.Mockito
+import org.springframework.context.ApplicationContext
+import org.springframework.http.HttpMethod
+import org.springframework.http.codec.support.DefaultServerCodecConfigurer
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.web.reactive.server.WebTestClient
+import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 
 @DisplayName("Todo Endpoints")
 @ExtendWith(value = [SpringExtension::class])
@@ -30,7 +30,7 @@ class TodoEndpointsTest(@org.springframework.beans.factory.annotation.Autowired 
     @ParameterizedTest(name = "Error Scenario - [{index}] {0} - {4} {1}")
     @MethodSource("data")
     fun testTodosErrorService(scenarioName: String, uri: String, serviceHook: (TodoService) -> Unit, clz: Class<Any>, method: HttpMethod) {
-        verifyInternalServiceErrorResponse(uri, serviceHook, clz, method);
+        verifyInternalServiceErrorResponse(uri, serviceHook, clz, method)
     }
 
     private fun <R> verifyInternalServiceErrorResponse(uri: String, serviceHook: (TodoService) -> Unit, clz: Class<R>, method: HttpMethod) {
@@ -40,16 +40,16 @@ class TodoEndpointsTest(@org.springframework.beans.factory.annotation.Autowired 
         val todo = TodoEndpoints(todoService)
         val errorAttributes = CustomErrorAttributes()
         val globalErrorHandler = GlobalErrorHandler(errorAttributes, applicationContext, DefaultServerCodecConfigurer())
-        val webTestClient = WebTestClient.bindToController(todo, globalErrorHandler).build();
+        val webTestClient = WebTestClient.bindToController(todo, globalErrorHandler).build()
 
         val result: Mono<R> = Mono.from(webTestClient.method(method).uri(uri).exchange().expectStatus().is5xxServerError.returnResult(clz).responseBody)
         MonoConsumer(result, false).drain()
-        StepVerifier.create(result).expectComplete().verify();
+        StepVerifier.create(result).expectComplete().verify()
     }
 
     private fun data(): Stream<Arguments> {
         val todoTask = Todos.createOneForToday()
-        val id = todoTask.id;
+        val id = todoTask.id
         return Stream.of(
             Arguments.of(
                 "Find Todos test", "/todo/123",
@@ -71,7 +71,7 @@ class TodoEndpointsTest(@org.springframework.beans.factory.annotation.Autowired 
                 "Search Todos", "/todos/search",
                 { todoService: TodoService -> Mockito.`when`(todoService.listItems()).thenReturn(Mono.error<List<TodoTask>>(InternalServerError())) }, Map::class.java, HttpMethod.GET
             )
-        );
+        )
     }
 
 }

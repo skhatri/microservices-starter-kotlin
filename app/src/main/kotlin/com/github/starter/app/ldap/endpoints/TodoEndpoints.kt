@@ -1,17 +1,17 @@
-package com.github.starter.app.todo.endpoints;
+package com.github.starter.app.ldap.endpoints
 
-import com.github.starter.app.todo.model.TodoTask;
-import com.github.starter.app.todo.service.TodoService;
-import com.github.starter.core.container.Container;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+import com.github.starter.app.ldap.model.TodoTask
+import com.github.starter.app.ldap.service.TodoService
+import com.github.starter.core.container.Container
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/todo")
@@ -39,6 +39,6 @@ class TodoEndpoints(private val todoService: TodoService) {
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: String): Mono<Container<Map<String, Boolean>>> {
-        return todoService.delete(id).map { b -> mapOf("result" to b) }.map { Container(it) };
+        return todoService.delete(id).map { b -> mapOf("result" to b) }.map { Container(it) }
     }
 }

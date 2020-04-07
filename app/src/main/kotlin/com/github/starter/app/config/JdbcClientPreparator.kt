@@ -1,10 +1,10 @@
-package com.github.starter.app.config;
+package com.github.starter.app.config
 
 import com.github.starter.app.secrets.SecretsClient
 import com.github.starter.core.exception.ConfigurationException
 import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactoryOptions
-import java.util.function.BiConsumer;
+import java.util.function.BiConsumer
 
 class JdbcClientPreparator(private val configItemMap: Map<String, ConfigItem>, private val secretsClient: SecretsClient) {
 
@@ -33,6 +33,6 @@ class JdbcClientPreparator(private val configItemMap: Map<String, ConfigItem>, p
         if (clients.isEmpty()) {
             throw ConfigurationException("no jdbc clients are set. set datasource.jdbc.enabled=false if not using jdbc")
         }
-        return clients;
+        return clients
     }
 }

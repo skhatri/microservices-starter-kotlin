@@ -1,9 +1,9 @@
-package com.github.starter.app.todo.repository;
+package com.github.starter.app.ldap.repository
 
-import com.github.starter.app.todo.endpoints.Todos;
-import com.github.starter.app.todo.model.TodoTask;
-import java.time.LocalDateTime;
-import org.junit.jupiter.api.Assertions;
+import com.github.starter.app.ldap.endpoints.Todos
+import com.github.starter.app.ldap.model.TodoTask
+import java.time.LocalDateTime
+import org.junit.jupiter.api.Assertions
 
 class TodoRepositoryUseCases(private val todoRepository:TodoRepository) {
 
@@ -34,7 +34,7 @@ class TodoRepositoryUseCases(private val todoRepository:TodoRepository) {
     }
 
     fun verifyUpdateTodoTask() {
-        val task = Todos.createOne(LocalDateTime.now());
+        val task = Todos.createOne(LocalDateTime.now())
         val savedTask = todoRepository.add(task).block()!!
         Assertions.assertEquals(task.description, savedTask.description)
 
@@ -42,7 +42,7 @@ class TodoRepositoryUseCases(private val todoRepository:TodoRepository) {
         todoRepository.update(
             TodoTask(taskId, savedTask.description, "user1", LocalDateTime.now(),
                 "DONE", LocalDateTime.now())
-        ).block();
+        ).block()
 
         val updatedTask = todoRepository.findById(taskId).block()!!
         Assertions.assertEquals("DONE", updatedTask.status)

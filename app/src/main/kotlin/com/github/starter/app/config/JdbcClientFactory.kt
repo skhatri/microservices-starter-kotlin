@@ -1,4 +1,4 @@
-package com.github.starter.app.config;
+package com.github.starter.app.config
 
 import com.github.starter.core.exception.ConfigurationException
 

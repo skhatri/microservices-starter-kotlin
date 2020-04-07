@@ -1,8 +1,8 @@
-package com.github.starter.core.container;
+package com.github.starter.core.container
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 
 class MessageItem @JsonCreator constructor(@JsonProperty("code") val code: String, @JsonProperty("message") val message: String,
                                            @JsonProperty("details")
@@ -16,27 +16,27 @@ class MessageItem @JsonCreator constructor(@JsonProperty("code") val code: Strin
     class Builder(var code: String? = null, var message: String? = null, var details: Map<String, Any> = mapOf()) {
 
         fun withCode(code: String): Builder {
-            this.code = code;
-            return this;
+            this.code = code
+            return this
         }
 
         fun withMessage(message: String): Builder {
-            this.message = message;
-            return this;
+            this.message = message
+            return this
         }
 
         fun withDetails(details: Map<String, Any>): Builder {
-            this.details = this.details.plus(details);
-            return this;
+            this.details = this.details.plus(details)
+            return this
         }
 
         fun withDetailItem(item: String, value: Any): Builder {
             this.details = this.details.plus(Pair(item, value))
-            return this;
+            return this
         }
 
         fun build(): MessageItem {
-            return MessageItem(code!!, message!!, details);
+            return MessageItem(code!!, message!!, details)
         }
     }
 }
