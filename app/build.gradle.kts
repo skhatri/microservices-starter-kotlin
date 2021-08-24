@@ -1,13 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.2.5.RELEASE"
+    id("org.springframework.boot") version "2.5.3"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("org.sonarqube") version "2.8"
     id("jacoco")
-    id("com.google.cloud.tools.jib") version "2.1.0"
-    kotlin("jvm") version "1.3.71"
-    kotlin("plugin.spring") version "1.3.71"
+    kotlin("jvm") version "1.5.21"
+    kotlin("plugin.spring") version "1.5.21"
 }
 
 java {
@@ -47,12 +46,14 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.5.1")
     implementation("io.projectreactor.addons:reactor-adapter:3.3.2.RELEASE")
     implementation("org.yaml:snakeyaml:1.26")
-    implementation("io.r2dbc:r2dbc-spi:0.8.1.RELEASE")
-    implementation("io.r2dbc:r2dbc-postgresql:0.8.1.RELEASE")
+    implementation("io.r2dbc:r2dbc-spi:0.8.5.RELEASE")
+    implementation("io.r2dbc:r2dbc-postgresql:0.8.5.RELEASE")
     implementation("io.r2dbc:r2dbc-h2:0.8.1.RELEASE")
-    implementation("org.springframework.data:spring-data-r2dbc:1.0.0.RELEASE")
+    implementation("org.springframework.data:spring-data-r2dbc:1.3.4")
     implementation("io.github.skhatri:mounted-secrets-client:0.2.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "junit")
@@ -62,18 +63,18 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test:3.3.2.RELEASE")
     testImplementation("org.mockito:mockito-core:3.3.3")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.1")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.1")
 
-    testImplementation("org.junit.platform:junit-platform-commons:1.6.1")
-    testImplementation("org.junit.platform:junit-platform-runner:1.6.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.6.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.6.1")
-    testImplementation("org.testcontainers:testcontainers:1.13.0")
-    testImplementation("org.testcontainers:junit-jupiter:1.13.0")
-    testImplementation("org.testcontainers:postgresql:1.13.0")
+    testImplementation("org.junit.platform:junit-platform-commons:1.7.1")
+    testImplementation("org.junit.platform:junit-platform-runner:1.7.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.7.1")
+    testImplementation("org.testcontainers:testcontainers:1.16.0")
+    testImplementation("org.testcontainers:junit-jupiter:1.16.0")
+    testImplementation("org.testcontainers:postgresql:1.16.0")
 
 }
 
@@ -152,22 +153,6 @@ task("runApp", JavaExec::class) {
             "-Xms512m", "-Xmx512m"
     )
 }
-
-jib {
-    to {
-        image = project.ext["image.name"] as String
-    }
-    container {
-        labels = mapOf(
-             "lang" to "java",
-             "vm" to "java11",
-             "group" to "com.github.starter",
-             "artifact" to "microservices-starter-java"
-        )
-    }
-
-}
-
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

@@ -48,9 +48,3 @@ Publish results using
 ```
 snyk monitor --all-sub-projects
 ```
-
-### container
-build image using
-```
-gradle jib 
-```
