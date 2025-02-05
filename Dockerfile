@@ -1,4 +1,4 @@
-FROM openjdk:11.0.6-jdk
+FROM openjdk:21-jdk-slim
 RUN mkdir -p /opt/app
 COPY app/build/libs/app.jar /opt/app/
 EXPOSE 8080
