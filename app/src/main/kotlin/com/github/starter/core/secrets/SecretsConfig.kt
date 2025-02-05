@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration
 open class SecretsConfig {
 
     @ConditionalOnProperty(name = ["secrets.enabled"], havingValue = "true", matchIfMissing = false)
-    @Autowired
     @Bean
     open fun createSecretClient(secretsProperties: SecretsProperties): SecretsClient {
         return SecretsClient(MountedSecretsFactory(secretsProperties.config).create())

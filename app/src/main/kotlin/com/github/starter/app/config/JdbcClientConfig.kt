@@ -12,13 +12,11 @@ import org.springframework.stereotype.Component
 @ConditionalOnProperty(name = ["datasource.jdbc.enabled"], havingValue = "true")
 open class JdbcClientConfig {
 
-    @Autowired
     @Bean
     open fun databaseProperties(jdbcProperties: JdbcProperties): Map<String, ConfigItem> {
         return jdbcProperties.ref.map { kv -> kv.name to kv }.toMap();
     }
 
-    @Autowired
     @Bean
     open fun dataSources(jdbcConfigItems: Map<String, ConfigItem>, secretsClient: SecretsClient): JdbcClientFactory {
         return JdbcClientFactory(JdbcClientPreparator(jdbcConfigItems, secretsClient).configure(initScripts()));

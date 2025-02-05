@@ -3,6 +3,7 @@ package com.github.starter.app.todo.endpoints;
 import com.github.starter.app.todo.model.TodoTask;
 import com.github.starter.app.todo.service.TodoService;
 import com.github.starter.core.container.Container;
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono;
@@ -19,7 +20,7 @@ class TodoEndpoints(private val todoService: TodoService) {
 
     @GetMapping("/{id}")
     fun get(@PathVariable("id") id: String): Mono<Container<TodoTask>> {
-        return todoService.findById(id).map { Container(it) }
+        return todoService.findById(id).map { Container<TodoTask>(it) }
     }
 
     @PostMapping(value = ["/"], consumes = [MediaType.APPLICATION_JSON_VALUE])

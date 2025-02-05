@@ -47,13 +47,13 @@ class DefaultTodoRepositoryIntegrationTest {
 
         val secretProvider = SecretProvider()
         secretProvider.entriesLocation = "all.properties"
-        secretProvider.errorDecision = ErrorDecision.EMPTY.toString().toLowerCase()
+        secretProvider.errorDecision = ErrorDecision.EMPTY.toString().lowercase()
         secretProvider.isIgnoreResourceFailure = true
         secretProvider.name = "vault"
         secretProvider.mount = "/doesntexist"
 
         val secretConfiguration = SecretConfiguration()
-        secretConfiguration.setKeyErrorDecision(ErrorDecision.IDENTITY.toString().toLowerCase())
+        secretConfiguration.setKeyErrorDecision(ErrorDecision.IDENTITY.toString().lowercase())
         secretConfiguration.providers = listOf(secretProvider)
         val mountedSecretsResolver = MountedSecretsFactory(secretConfiguration).create()
         val secretsClient = SecretsClient(mountedSecretsResolver)

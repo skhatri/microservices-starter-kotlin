@@ -113,7 +113,9 @@ class ListSimulation extends Simulation {
   val searchScenarioOpen: PopulationBuilder = scenario("Todo Search").during(5 minutes) {
     exec(Todo.search)
   }.inject(
-    heavisideUsers(2000) during (30 seconds)
+    nothingFor(10 seconds),
+    rampUsersPerSec(0) to 100 during (5 seconds),
+    constantUsersPerSec(100) during (30 seconds)
   )
 
 

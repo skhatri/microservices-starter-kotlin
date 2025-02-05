@@ -3,10 +3,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.puppycrawl.tools:checkstyle:8.30")
+        classpath("com.puppycrawl.tools:checkstyle:10.21.2")
     }
 }
 apply(plugin = "checkstyle")
+
 
 tasks.withType<Checkstyle>().configureEach {
     ignoreFailures = false
@@ -15,8 +16,9 @@ tasks.withType<Checkstyle>().configureEach {
 
     configFile = file("$rootDir/gradle/settings/checkstyle.xml")
     reports {
-        xml.isEnabled = false
-        html.isEnabled = true
+        xml.required = false
+        sarif.required = true
+        html.required = true
         html.stylesheet = resources.text.fromFile("$rootDir/gradle/settings/checkstyle.xsl")
     }
 }

@@ -1,4 +1,5 @@
 # microservices-starter
+
 Microservices Starter Project
 
 [![Build](https://travis-ci.com/skhatri/microservices-starter-kotlin.svg?branch=master)](https://travis-ci.com/github/skhatri/microservices-starter-kotlin)
@@ -8,28 +9,25 @@ Microservices Starter Project
 [![Known Vulnerabilities](https://snyk.io/test/github/skhatri/microservices-starter-kotlin/badge.svg?targetFile=build.gradle.kts)](https://snyk.io/test/github/skhatri/microservices-starter-kotlin?targetFile=build.gradle.kts)
 
 ### Development
+
 [Developer Guide](DEV.md)
 
-### logging
-log4j2
+### Content
 
-### code analysis
-sonar
-
-### testing
-junit 5
-
-### code-coverage
-Jacoco
-
-### code-style
-Google Checkstyle modified to be compatible with 8.30.
-Method Length, File Length, Cyclomatic Complexity have been added.
+| Category     | Choice     |
+|--------------|------------|
+| Logging      | log4j2     |
+| SAST         | Sonar      |
+| Tests        | JUnit5     |
+| Coverage     | Jacoco     |
+| Code Style   | Checkstyle |
+| Load Testing | Gatling    |
 
 ### load-testing
 Gatling
 
 Load test can be run using one of the following two approaches
+
 ```
 gradle load-testing:runTest
 IDE - com.github.starter.todo.Runner
@@ -38,6 +36,7 @@ IDE - com.github.starter.todo.Runner
 ### vulnerability
 
 Install snyk and authenticate for CLI session
+
 ```
 npm install -g snyk
 snyk auth
