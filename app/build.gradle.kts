@@ -18,6 +18,11 @@ configurations {
         resolutionStrategy.failOnVersionConflict()
     }
 }
+val coroutineVersion = project.findProperty("coroutine.version") as String? ?: "1.9.0"
+val jupiterVersion = project.findProperty("jupiter.version") as String? ?: "5.11.4"
+val junitPlatformVersion = project.findProperty("junitplatform.version") as String? ?: "1.11.4"
+val testContainersVersion = project.findProperty("testcontainers.version") as String? ?: "1.20.4"
+
 
 dependencies {
     listOf(
@@ -45,8 +50,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.9.0")
+    listOf("kotlinx-coroutines-core", "kotlinx-coroutines-reactive", "kotlinx-coroutines-reactor").forEach { name ->
+        implementation("org.jetbrains.kotlinx:$name:$coroutineVersion")
+    }
     implementation("io.projectreactor.addons:reactor-adapter:3.5.2")
     implementation("org.yaml:snakeyaml:2.3")
     implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
@@ -63,20 +69,20 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test:3.5.2")
     testImplementation("org.mockito:mockito-core:5.15.2")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.4")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.11.4")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$jupiterVersion")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$jupiterVersion")
 
-    testImplementation("org.junit.platform:junit-platform-commons:1.11.4")
-    testImplementation("org.junit.platform:junit-platform-runner:1.11.4")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.4")
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.11.4")
+    testImplementation("org.junit.platform:junit-platform-commons:$junitPlatformVersion")
+    testImplementation("org.junit.platform:junit-platform-runner:$junitPlatformVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:$junitPlatformVersion")
 
 
-    testImplementation("org.testcontainers:testcontainers:1.16.0")
-    testImplementation("org.testcontainers:junit-jupiter:1.16.0")
-    testImplementation("org.testcontainers:postgresql:1.16.0")
+    testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
+    testImplementation("org.testcontainers:junit-jupiter:$testContainersVersion")
+    testImplementation("org.testcontainers:postgresql:$testContainersVersion")
 
 }
 
